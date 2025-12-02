@@ -44,15 +44,56 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?= BASE_URL ?>tour" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
                 <p>Danh sách Tour</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="<?= BASE_URL ?>tour/create" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
                 <p>Thêm Tour mới</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon bi bi-gear-wide-connected"></i>
+            <p>
+              Quản lý & Điều hành Tour
+              <i class="nav-arrow bi bi-chevron-right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?= BASE_URL ?>nhansu" class="nav-link">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Quản lý Nhân sự </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= BASE_URL ?>lich" class="nav-link">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Lịch khởi hành & Phân bổ</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= BASE_URL ?>booking" class="nav-link">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Danh sách Khách đoàn</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= BASE_URL ?>ghichu" class="nav-link">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Ghi chú đặc biệt</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= BASE_URL ?>nhatky" class="nav-link">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Nhật ký Tour</p>
               </a>
             </li>
           </ul>
