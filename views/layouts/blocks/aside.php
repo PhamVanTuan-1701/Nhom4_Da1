@@ -12,7 +12,13 @@
       />
       <!--end::Brand Image-->
       <!--begin::Brand Text-->
-      <span class="brand-text fw-light">Quản Lý Tour</span>
+      <span class="brand-text fw-light">
+        <?php if (isAdmin()): ?>
+          Quản Trị Viên
+        <?php else: ?>
+          Quản Lý Tour
+        <?php endif; ?>
+      </span>
       <!--end::Brand Text-->
     </a>
     <!--end::Brand Link-->
@@ -38,7 +44,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon bi bi-airplane-engines"></i>
             <p>
-              Quản lý Tour
+              <?= isAdmin() ? 'Quản lý Tour' : 'Xem Tour' ?>
               <i class="nav-arrow bi bi-chevron-right"></i>
             </p>
           </a>
@@ -46,54 +52,58 @@
             <li class="nav-item">
               <a href="<?= BASE_URL ?>tour" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Danh sách Tour</p>
+                <p><?= isAdmin() ? 'Danh sách Tour' : 'Tour được phân công' ?></p>
               </a>
             </li>
+            <?php if (isAdmin()): ?>
             <li class="nav-item">
               <a href="<?= BASE_URL ?>tour/create" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
                 <p>Thêm Tour mới</p>
               </a>
             </li>
+            <?php endif; ?>
           </ul>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link">
             <i class="nav-icon bi bi-gear-wide-connected"></i>
             <p>
-              Quản lý & Điều hành Tour
+              <?= isAdmin() ? 'Quản lý & Điều hành Tour' : 'Thông tin Tour' ?>
               <i class="nav-arrow bi bi-chevron-right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
+            <?php if (isAdmin()): ?>
             <li class="nav-item">
               <a href="<?= BASE_URL ?>nhansu" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Quản lý Nhân sự </p>
+                <p>Quản lý Nhân sự</p>
               </a>
             </li>
+            <?php endif; ?>
             <li class="nav-item">
               <a href="<?= BASE_URL ?>lich" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Lịch khởi hành & Phân bổ</p>
+                <p><?= isAdmin() ? 'Lịch khởi hành & Phân bổ' : 'Xem lịch khởi hành' ?></p>
               </a>
             </li>
             <li class="nav-item">
               <a href="<?= BASE_URL ?>booking" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Danh sách Khách đoàn</p>
+                <p><?= isAdmin() ? 'Danh sách Khách đoàn' : 'Xem khách đoàn' ?></p>
               </a>
             </li>
             <li class="nav-item">
               <a href="<?= BASE_URL ?>ghichu" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Ghi chú đặc biệt</p>
+                <p><?= isAdmin() ? 'Ghi chú đặc biệt' : 'Xem ghi chú' ?></p>
               </a>
             </li>
             <li class="nav-item">
               <a href="<?= BASE_URL ?>nhatky" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Nhật ký Tour</p>
+                <p><?= isAdmin() ? 'Nhật ký Tour' : 'Xem nhật ký' ?></p>
               </a>
             </li>
           </ul>
@@ -102,7 +112,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon bi bi-people-fill"></i>
             <p>
-              Quản lý Khách hàng
+              <?= isAdmin() ? 'Quản lý Khách hàng' : 'Xem Khách hàng' ?>
               <i class="nav-arrow bi bi-chevron-right"></i>
             </p>
           </a>
@@ -110,7 +120,7 @@
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Danh sách Khách hàng</p>
+                <p><?= isAdmin() ? 'Danh sách Khách hàng' : 'Khách hàng trong tour' ?></p>
               </a>
             </li>
           </ul>

@@ -7,9 +7,9 @@
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="<?= $title ?? 'Website Quản Lý Tour' ?>" />
-    <meta name="author" content="FPOLY HN" />
-    <meta name="description" content="Website Quản Lý Tour Du Lịch FPOLY HN" />
-    <meta name="keywords" content="Website Quản Lý Tour Du Lịch FPOLY HN" />
+    <meta name="author" content="LUXURY4TRIP" />
+    <meta name="description" content="Website Quản Lý Tour Du Lịch LUXURY4TRIP" />
+    <meta name="keywords" content="Website Quản Lý Tour Du Lịch LUXURY4TRIP" />
     <!--end::Primary Meta Tags-->
     <!--begin::Bootstrap 5 CSS-->
     <link
