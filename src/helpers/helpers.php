@@ -46,19 +46,30 @@ function asset(string $path): string
     return rtrim(BASE_URL, '/') . '/public/' . $trimmed;
 }
 
+// Tạo avatar chữ cái cho user
+function getUserAvatarHtml($user, $size = 40, $classes = '')
+{
+    if ($user->role === 'admin') {
+        // Admin dùng ảnh upload hoặc mặc định
+        $avatarSrc = isset($_SESSION['user_avatar_' . $user->id]) ? $_SESSION['user_avatar_' . $user->id] : asset('dist/assets/img/user2-160x160.jpg');
+        return '<img src="' . $avatarSrc . '" class="' . $classes . '" alt="Avatar" style="width: ' . $size . 'px; height: ' . $size . 'px; object-fit: cover;">';
+    } else {
+        // User dùng avatar chữ cái
+        $initial = getLastNameInitial($user->name);
+        return '<div class="' . $classes . '" style="width: ' . $size . 'px; height: ' . $size . 'px; background: linear-gradient(135deg, #007bff, #0056b3); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: ' . ($size * 0.4) . 'px;">' . $initial . '</div>';
+    }
+}
+
 // Khởi động session nếu chưa khởi động(session là một cơ chế để lưu trữ dữ liệu trên server)
 function startSession()
 {
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
-    }
+    // Session đã được khởi tạo trong index.php
 }
 
 // Lưu thông tin user vào session sau khi đăng nhập thành công
 // @param User $user Đối tượng User cần lưu vào session
 function loginUser($user)
 {
-    startSession();
     $_SESSION['user_id'] = $user->id;
     $_SESSION['user_name'] = $user->name;
     $_SESSION['user_email'] = $user->email;
@@ -68,7 +79,6 @@ function loginUser($user)
 // Đăng xuất: xóa toàn bộ thông tin user khỏi session
 function logoutUser()
 {
-    startSession();
     unset($_SESSION['user_id']);
     unset($_SESSION['user_name']);
     unset($_SESSION['user_email']);
@@ -80,7 +90,6 @@ function logoutUser()
 // @return bool true nếu đã đăng nhập, false nếu chưa
 function isLoggedIn()
 {
-    startSession();
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 }
 
@@ -92,7 +101,7 @@ function getCurrentUser()
         return null;
     }
 
-    startSession();
+
     return new User([
         'id' => $_SESSION['user_id'],
         'name' => $_SESSION['user_name'],
@@ -148,4 +157,43 @@ function requireGuideOrAdmin()
         header('Location: ' . BASE_URL);
         exit;
     }
+}
+
+// Kiểm tra xem user hiện tại có phải là user thông thường không
+function isUser()
+{
+    $user = getCurrentUser();
+    return $user && $user->role === 'huong_dan_vien';
+}
+
+// Lấy loại tài khoản hiện tại
+function getUserType()
+{
+    if (isAdmin()) {
+        return 'admin';
+    } elseif (isUser()) {
+        return 'user';
+    }
+    return 'guest';
+}
+
+// Lấy tên hiển thị của loại tài khoản
+function getUserTypeLabel()
+{
+    switch (getUserType()) {
+        case 'admin':
+            return 'Quản trị viên';
+        case 'user':
+            return 'Hướng dẫn viên';
+        default:
+            return 'Khách';
+    }
+}
+
+// Lấy chữ cái cuối của tên để làm avatar
+function getLastNameInitial($fullName)
+{
+    $words = explode(' ', trim($fullName));
+    $lastName = end($words);
+    return strtoupper(substr($lastName, 0, 1));
 }
