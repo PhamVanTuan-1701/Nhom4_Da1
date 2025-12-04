@@ -6,6 +6,7 @@ class LichKhoiHanhController
 {
     public function index()
     {
+        requireLogin();
         $lichKhoiHanh = [
             [
                 'id' => 1,
@@ -46,6 +47,7 @@ class LichKhoiHanhController
 
     public function create()
     {
+        requireAdmin(); // Chỉ admin mới được tạo lịch
         $tours = [
             ['id' => 1, 'ten_tour' => 'Tour Hạ Long 3N2Đ'],
             ['id' => 2, 'ten_tour' => 'Tour Sapa 4N3Đ'],
@@ -57,6 +59,7 @@ class LichKhoiHanhController
 
     public function phanBo($id)
     {
+        requireAdmin(); // Chỉ admin mới được phân bổ
         // Lấy thông tin lịch khởi hành
         $lichKhoiHanh = [
             'id' => $id,
@@ -95,6 +98,7 @@ class LichKhoiHanhController
 
     public function dichVu($id)
     {
+        requireAdmin(); // Chỉ admin mới được quản lý dịch vụ
         $lichKhoiHanh = [
             'id' => $id,
             'ma_lich' => 'LKH00' . $id,

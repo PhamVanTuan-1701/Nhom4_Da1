@@ -4,6 +4,7 @@ class GhiChuController
 {
     public function index()
     {
+        requireLogin();
         $ghiChuList = [
             [
                 'id' => 1,
@@ -45,6 +46,7 @@ class GhiChuController
 
     public function create()
     {
+        requireAdmin(); // Chỉ admin mới được tạo ghi chú
         $khachHangList = [
             ['id' => 1, 'ho_ten' => 'Trần Văn Nam', 'tour' => 'Tour Hạ Long 3N2Đ'],
             ['id' => 2, 'ho_ten' => 'Nguyễn Thị Lan', 'tour' => 'Tour Hạ Long 3N2Đ'],
@@ -56,6 +58,7 @@ class GhiChuController
 
     public function view($id)
     {
+        requireLogin();
         $ghiChu = [
             'id' => $id,
             'khach_hang_id' => 1,
@@ -75,6 +78,7 @@ class GhiChuController
 
     public function khachHang($khachId)
     {
+        requireLogin();
         $khachHang = [
             'id' => $khachId,
             'ho_ten' => 'Trần Văn Nam',

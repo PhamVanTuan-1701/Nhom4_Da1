@@ -4,6 +4,7 @@ class BookingController
 {
     public function index()
     {
+        requireLogin();
         $bookings = [
             [
                 'id' => 1,
@@ -34,6 +35,7 @@ class BookingController
 
     public function danhSach($id)
     {
+        requireLogin();
         $booking = [
             'id' => $id,
             'ma_booking' => 'BK00' . $id,
@@ -90,6 +92,7 @@ class BookingController
 
     public function inDanhSach($id)
     {
+        requireLogin();
         $booking = [
             'ma_booking' => 'BK00' . $id,
             'ten_tour' => 'Tour Hạ Long 3N2Đ',
@@ -111,6 +114,7 @@ class BookingController
 
     public function phanPhong($id)
     {
+        requireAdmin(); // Chỉ admin mới được phân phòng
         $booking = [
             'id' => $id,
             'ma_booking' => 'BK00' . $id,

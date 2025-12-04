@@ -2,6 +2,7 @@
 
 class NhanSuController {
     public function index(): void {
+        requireLogin();
         $hdvList = $_SESSION['hdv_list'] ?? [];
         $success = $_SESSION['success'] ?? null;
         unset($_SESSION['success']);
@@ -9,6 +10,7 @@ class NhanSuController {
     }
 
     public function create(): void {
+        requireAdmin(); // Chỉ admin mới được tạo mới
         $errors = $_SESSION['errors'] ?? [];
         $oldData = $_SESSION['old_data'] ?? [];
         unset($_SESSION['errors'], $_SESSION['old_data']);
@@ -16,6 +18,7 @@ class NhanSuController {
     }
 
     public function store(): void {
+        requireAdmin(); // Chỉ admin mới được lưu
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: ' . BASE_URL . 'nhansu');
             return;
@@ -77,6 +80,7 @@ class NhanSuController {
     }
 
     public function view(): void {
+        requireLogin();
         $id = (int)($_GET['id'] ?? 0);
         $hdv = null;
         
@@ -118,6 +122,7 @@ class NhanSuController {
     }
 
     public function edit(): void {
+        requireAdmin(); // Chỉ admin mới được sửa
         $id = (int)($_GET['id'] ?? 0);
         $hdv = null;
         
@@ -157,6 +162,7 @@ class NhanSuController {
     }
 
     public function update(): void {
+        requireAdmin(); // Chỉ admin mới được cập nhật
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header('Location: ' . BASE_URL . 'nhansu');
             return;

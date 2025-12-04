@@ -3,35 +3,39 @@
 ob_start();
 ?>
 <!--begin::Main Content-->
-<div class="welcome-wrapper">
-  <div class="welcome-card">
-    <div class="welcome-header text-white">
+<div class="welcome-wrapper" style="background-image: url('<?= asset('dist/assets/img/background.png') ?>'); background-size: cover; background-position: center;">
+  <div class="welcome-card" style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.3);">
+    <div class="welcome-header text-white" style="background: linear-gradient(135deg, rgba(255, 115, 0, 0.3), rgba(250, 156, 5, 0.3));">
       <a href="<?= BASE_URL ?>" class="text-white text-decoration-none">
         <div class="brand-icon">
-          <i class="bi bi-airplane-fill"></i>
+          <img src="<?= asset('dist/assets/img/LOGO.PNG') ?>" alt="Logo" style="height: 300px; width: auto;">
         </div>
-        <h1>
-          <strong>Chào mừng đến với Website Quản Lý Tour</strong>
+        <h1 style="font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+          Chào mừng đến với Website Luxury4Trip
         </h1>
         <div class="subtitle">
-          Hệ thống quản lý tour du lịch chuyên nghiệp của FPOLY HN
+          Hệ thống quản lý tour du lịch chuyên nghiệp của Luxury4Trip
         </div>
       </a>
     </div>
     <div class="card-body">
-      <div class="alert alert-info welcome-alert" role="alert">
+      <div class="alert alert-info welcome-alert" role="alert" style="background: rgba(217, 237, 247, 0.3); border-color: rgba(184, 218, 224, 0.3);">
         <h4 class="alert-heading">
           <i class="bi bi-info-circle-fill me-2"></i>
           Chào mừng!
         </h4>
         <p class="mb-3">
-          Đây là hệ thống quản lý tour du lịch của FPOLY HN. 
+          Đây là hệ thống quản lý tour du lịch của Luxury4Trip. 
           Để sử dụng đầy đủ chức năng, vui lòng đăng nhập vào hệ thống.
         </p>
-        <div class="d-grid">
+        <div class="d-grid gap-2">
           <a href="<?= BASE_URL ?>login" class="btn btn-welcome">
-            <i class="bi bi-box-arrow-in-right me-2"></i>
-            Đăng nhập ngay
+            <i class="bi bi-person me-2"></i>
+            Đăng nhập User
+          </a>
+          <a href="<?= BASE_URL ?>admin/login" class="btn btn-danger">
+            <i class="bi bi-shield-lock me-2"></i>
+            Đăng nhập Admin
           </a>
         </div>
       </div>

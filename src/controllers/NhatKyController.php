@@ -4,6 +4,7 @@ class NhatKyController
 {
     public function index()
     {
+        requireLogin();
         $nhatKyList = [
             [
                 'id' => 1,
@@ -34,6 +35,7 @@ class NhatKyController
 
     public function view($id)
     {
+        requireLogin();
         $nhatKy = [
             'id' => $id,
             'tour' => 'Tour Hạ Long 3N2Đ',
@@ -83,6 +85,7 @@ class NhatKyController
 
     public function create()
     {
+        requireAdmin(); // Chỉ admin mới được tạo nhật ký
         $tourList = [
             ['id' => 1, 'ma_tour' => 'LKH001', 'ten_tour' => 'Tour Hạ Long 3N2Đ', 'hdv' => 'Nguyễn Văn A'],
             ['id' => 2, 'ma_tour' => 'LKH002', 'ten_tour' => 'Tour Sapa 4N3Đ', 'hdv' => 'Trần Thị B']
@@ -93,6 +96,7 @@ class NhatKyController
 
     public function themDienBien($id)
     {
+        requireAdmin(); // Chỉ admin mới được thêm diễn biến
         $nhatKy = [
             'id' => $id,
             'tour' => 'Tour Hạ Long 3N2Đ',
@@ -104,6 +108,7 @@ class NhatKyController
 
     public function danhGiaHdv($id)
     {
+        requireLogin();
         $hdv = [
             'id' => $id,
             'ho_ten' => 'Nguyễn Văn A',

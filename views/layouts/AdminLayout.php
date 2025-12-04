@@ -7,9 +7,9 @@
     <!--begin::Primary Meta Tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="<?= $title ?? 'Trang chủ quản lý tour' ?>" />
-    <meta name="author" content="FPOLY HN" />
-    <meta name="description" content="Website Quản Lý Tour FPOLY HN"/>
-    <meta name="keywords" content="Website Quản Lý Tour FPOLY HN"/>
+    <meta name="author" content="LUXURY4TRIP" />
+    <meta name="description" content="Website Quản Lý Tour LUXURY4TRIP"/>
+    <meta name="keywords" content="Website Quản Lý Tour LUXURY4TRIP"/>
     <!--end::Primary Meta Tags-->
     <!--begin::Fonts-->
     <link
@@ -138,6 +138,42 @@
       });
     </script>
     <!--end::OverlayScrollbars Configure-->
+    <script>
+      // Định nghĩa BASE_URL cho JavaScript
+      const BASE_URL = '<?= BASE_URL ?>';
+      
+      // Cập nhật ảnh đại diện trong header khi có thay đổi
+      function updateHeaderAvatar(newAvatarSrc) {
+        <?php if (isLoggedIn() && isAdmin()): ?>
+        const headerAvatar = document.getElementById('headerAvatar');
+        const dropdownAvatar = document.getElementById('dropdownAvatar');
+        
+        if (headerAvatar) headerAvatar.src = newAvatarSrc;
+        if (dropdownAvatar) dropdownAvatar.src = newAvatarSrc;
+        <?php endif; ?>
+      }
+      
+      // Khôi phục ảnh từ session storage khi load trang
+      document.addEventListener('DOMContentLoaded', function() {
+        <?php if (isLoggedIn() && isAdmin()): ?>
+        const userId = '<?= getCurrentUser()->id ?>';
+        const savedAvatar = sessionStorage.getItem('userAvatar_' + userId);
+        if (savedAvatar) {
+          updateHeaderAvatar(savedAvatar);
+        }
+        <?php endif; ?>
+      });
+      
+      // Lắng nghe sự kiện storage để cập nhật ảnh từ trang profile
+      window.addEventListener('storage', function(e) {
+        <?php if (isLoggedIn() && isAdmin()): ?>
+        const userId = '<?= getCurrentUser()->id ?>';
+        if (e.key === 'userAvatar_' + userId && e.newValue) {
+          updateHeaderAvatar(e.newValue);
+        }
+        <?php endif; ?>
+      });
+    </script>
     <!--end::Script-->
     <?php if (isset($extraJs)): ?>
       <?php foreach ($extraJs as $js): ?>
