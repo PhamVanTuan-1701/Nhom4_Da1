@@ -44,20 +44,23 @@
           <a href="#" class="nav-link">
             <i class="nav-icon bi bi-airplane-engines"></i>
             <p>
-              <?= isAdmin() ? 'Quản lý Tour' : 'Xem Tour' ?>
+              Bán tour và đặt chỗ
               <i class="nav-arrow bi bi-chevron-right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?= BASE_URL ?>tour" class="nav-link">
+              <a href="<?= BASE_URL ?>tours" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p><?= isAdmin() ? 'Danh sách Tour' : 'Tour được phân công' ?></p>
+                <p>
+                  Danh sách Tour
+                  <span class="badge badge-info right"><?= getTourCount() ?></span>
+                </p>
               </a>
             </li>
             <?php if (isAdmin()): ?>
             <li class="nav-item">
-              <a href="<?= BASE_URL ?>tour/create" class="nav-link">
+              <a href="<?= BASE_URL ?>tours/form" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
                 <p>Thêm Tour mới</p>
               </a>
@@ -78,7 +81,10 @@
             <li class="nav-item">
               <a href="<?= BASE_URL ?>nhansu" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>Quản lý Nhân sự</p>
+                <p>
+                  Quản lý Nhân sự
+                  <span class="badge badge-success right"><?= getNhanSuCount() ?></span>
+                </p>
               </a>
             </li>
             <?php endif; ?>
@@ -91,9 +97,23 @@
             <li class="nav-item">
               <a href="<?= BASE_URL ?>booking" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p><?= isAdmin() ? 'Danh sách Khách đoàn' : 'Xem khách đoàn' ?></p>
+                <p>
+                  <?= isAdmin() ? 'Danh sách Khách đoàn' : 'Xem khách đoàn' ?>
+                  <span class="badge badge-warning right"><?= getBookingCount() ?></span>
+                </p>
               </a>
             </li>
+            <?php if (isAdmin()): ?>
+            <li class="nav-item">
+              <a href="<?= BASE_URL ?>admin/bookings" class="nav-link">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>
+                  Quản lý Đơn hàng
+                  <span class="badge badge-danger right"><?= getBookingCount() ?></span>
+                </p>
+              </a>
+            </li>
+            <?php endif; ?>
             <li class="nav-item">
               <a href="<?= BASE_URL ?>ghichu" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>

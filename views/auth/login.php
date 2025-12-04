@@ -12,7 +12,7 @@ ob_start();
                         <img src="<?= asset('dist/assets/img/LOGO.PNG') ?>" alt="Logo" style="height: 300px; width: auto;">
                     </div>
                     <h2 style="font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-                        Quản Lý Tour LUXURY4TRIP
+                        Hệ thống LUXURY4TRIP
                     </h2>
                 </a>
                 <div class="mt-2 fw-light fst-italic" style="font-size: 1rem;">
@@ -21,7 +21,7 @@ ob_start();
             </div>
             <div class="card-body">
                 <h4 class="card-title text-center mb-4 fw-bold card-title-login">
-                    Đăng nhập để tiếp tục
+                    Đăng nhập hệ thống
                 </h4>
                 <?php if (!empty($errors)): ?>
                 <div class="alert alert-danger fade show" role="alert">
@@ -41,16 +41,16 @@ ob_start();
 
                     <div class="mb-3">
                         <label for="loginEmail" class="form-label fw-semibold">
-                            Email
+                            Tài khoản
                         </label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                            <input type="email"
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text"
                                    class="form-control"
                                    id="loginEmail"
                                    name="email"
                                    value="<?= htmlspecialchars($email ?? '') ?>"
-                                   placeholder="Nhập email"
+                                   placeholder="Nhập tài khoản hoặc email"
                                    required
                                    autofocus />
                         </div>
@@ -84,16 +84,12 @@ ob_start();
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-login btn-lg">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Đăng nhập
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Đăng nhập hệ thống
                         </button>
                     </div>
                 </form>
                 <div class="login-divider"></div>
                 <div class="text-center">
-                    <a href="<?= BASE_URL ?>admin/login" class="text-decoration-none text-danger fw-semibold me-3">
-                        <i class="bi bi-shield-lock me-2"></i>
-                        Đăng nhập Admin
-                    </a>
                     <a href="<?= BASE_URL ?>" class="text-decoration-none text-fpt-orange fw-semibold">
                         <i class="bi bi-arrow-left me-2"></i>
                         Trang chủ
