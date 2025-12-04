@@ -22,7 +22,7 @@ class AuthController
 
         // Hiển thị view login
         view('auth.login', [
-            'title' => 'Đăng nhập User',
+            'title' => 'Đăng nhập hệ thống',
             'redirect' => $redirect,
         ]);
     }
@@ -46,7 +46,7 @@ class AuthController
         ]);
     }
 
-    // Xử lý đăng nhập cho user (nhận dữ liệu từ form POST)
+    // Xử lý đăng nhập chung (nhận dữ liệu từ form POST)
     public function checkLogin()
     {
         // Chỉ xử lý khi là POST request
@@ -60,11 +60,19 @@ class AuthController
         $password = $_POST['password'] ?? '';
         $redirect = $_POST['redirect'] ?? BASE_URL . 'home';
 
+        // Danh sách 4 tài khoản admin được phép
+        $validAdmins = [
+            'PH59005' => ['name' => 'Nhật Linh', 'password' => '10032006'],
+            'PH59186' => ['name' => 'Văn Tuân', 'password' => '12345678'],
+            'PH58731' => ['name' => 'Văn Công', 'password' => '12345678'],
+            'PH59195' => ['name' => 'Quốc Tùng', 'password' => '12345678'],
+        ];
+
         // Validate dữ liệu đầu vào
         $errors = [];
 
         if (empty($email)) {
-            $errors[] = 'Vui lòng nhập email';
+            $errors[] = 'Vui lòng nhập tài khoản';
         }
 
         if (empty($password)) {
@@ -74,7 +82,7 @@ class AuthController
         // Nếu có lỗi validation thì quay lại form login
         if (!empty($errors)) {
             view('auth.login', [
-                'title' => 'Đăng nhập User',
+                'title' => 'Đăng nhập hệ thống',
                 'errors' => $errors,
                 'email' => $email,
                 'redirect' => $redirect,
@@ -82,14 +90,26 @@ class AuthController
             return;
         }
 
-        // Tạo user mẫu để đăng nhập (không kiểm tra database)
-        $user = new User([
-            'id' => 1,
-            'name' => 'Hướng dẫn viên',
-            'email' => $email,
-            'role' => 'huong_dan_vien',
-            'status' => 1,
-        ]);
+        // Kiểm tra xem có phải admin không
+        if (isset($validAdmins[$email]) && $validAdmins[$email]['password'] === $password) {
+            // Đăng nhập với quyền admin
+            $user = new User([
+                'id' => 999,
+                'name' => $validAdmins[$email]['name'],
+                'email' => $email,
+                'role' => 'admin',
+                'status' => 1,
+            ]);
+        } else {
+            // Đăng nhập với quyền user thông thường (không kiểm tra mật khẩu)
+            $user = new User([
+                'id' => 1,
+                'name' => 'Hướng dẫn viên',
+                'email' => $email,
+                'role' => 'huong_dan_vien',
+                'status' => 1,
+            ]);
+        }
 
         // Đăng nhập thành công: lưu vào session
         loginUser($user);

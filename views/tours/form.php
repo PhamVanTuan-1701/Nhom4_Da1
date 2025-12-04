@@ -6,7 +6,7 @@
             <div class="card-header bg-primary text-white">
                 <h4 class="mb-0 fw-bold"><?= $title ?></h4>
             </div>
-            <form action="<?= BASE_URL ?>tour/save" method="POST">
+            <form action="<?= BASE_URL ?>tours/save" method="POST">
                 <input type="hidden" name="id" value="<?= $tour['id'] ?? '' ?>">
 
                 <div class="card-body">

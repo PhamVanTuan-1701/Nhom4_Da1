@@ -35,6 +35,11 @@
         <link rel="stylesheet" href="<?= asset($css) ?>">
       <?php endforeach; ?>
     <?php endif; ?>
+    <?php if (isset($extraCss)): ?>
+      <?php foreach ($extraCss as $css): ?>
+        <link rel="stylesheet" href="<?= asset($css) ?>">
+      <?php endforeach; ?>
+    <?php endif; ?>
   </head>
   <!--end::Head-->
   <!--begin::Body-->

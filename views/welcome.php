@@ -30,12 +30,8 @@ ob_start();
         </p>
         <div class="d-grid gap-2">
           <a href="<?= BASE_URL ?>login" class="btn btn-welcome">
-            <i class="bi bi-person me-2"></i>
-            Đăng nhập User
-          </a>
-          <a href="<?= BASE_URL ?>admin/login" class="btn btn-danger">
-            <i class="bi bi-shield-lock me-2"></i>
-            Đăng nhập Admin
+            <i class="bi bi-box-arrow-in-right me-2"></i>
+            Đăng nhập hệ thống
           </a>
         </div>
       </div>

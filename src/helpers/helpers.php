@@ -63,13 +63,16 @@ function getUserAvatarHtml($user, $size = 40, $classes = '')
 // Khởi động session nếu chưa khởi động(session là một cơ chế để lưu trữ dữ liệu trên server)
 function startSession()
 {
-    // Session đã được khởi tạo trong index.php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 }
 
 // Lưu thông tin user vào session sau khi đăng nhập thành công
 // @param User $user Đối tượng User cần lưu vào session
 function loginUser($user)
 {
+    startSession();
     $_SESSION['user_id'] = $user->id;
     $_SESSION['user_name'] = $user->name;
     $_SESSION['user_email'] = $user->email;
@@ -79,6 +82,7 @@ function loginUser($user)
 // Đăng xuất: xóa toàn bộ thông tin user khỏi session
 function logoutUser()
 {
+    startSession();
     unset($_SESSION['user_id']);
     unset($_SESSION['user_name']);
     unset($_SESSION['user_email']);
@@ -90,6 +94,7 @@ function logoutUser()
 // @return bool true nếu đã đăng nhập, false nếu chưa
 function isLoggedIn()
 {
+    startSession();
     return isset($_SESSION['user_id']) && !empty($_SESSION['user_id']);
 }
 
@@ -101,7 +106,7 @@ function getCurrentUser()
         return null;
     }
 
-
+    startSession();
     return new User([
         'id' => $_SESSION['user_id'],
         'name' => $_SESSION['user_name'],
@@ -196,4 +201,37 @@ function getLastNameInitial($fullName)
     $words = explode(' ', trim($fullName));
     $lastName = end($words);
     return strtoupper(substr($lastName, 0, 1));
+}
+
+// Đếm số lượng tour
+function getTourCount()
+{
+    try {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT COUNT(*) FROM tours WHERE status = 1");
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    } catch (Exception $e) {
+        return 0;
+    }
+}
+
+// Đếm số lượng booking
+function getBookingCount()
+{
+    try {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT COUNT(*) FROM bookings");
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    } catch (Exception $e) {
+        return 0;
+    }
+}
+
+// Đếm số lượng nhân sự
+function getNhanSuCount()
+{
+    // Giả lập có 4 nhân sự (4 admin đã đăng ký)
+    return 4;
 }
