@@ -1,4 +1,6 @@
 <?php
+// Khởi tạo session ngay đầu
+session_start();
 
 // Nạp cấu hình chung của ứng dụng
 $config = require __DIR__ . '/config/config.php';
@@ -13,13 +15,69 @@ require_once __DIR__ . '/src/models/User.php';
 // Nạp các file chứa controller
 require_once __DIR__ . '/src/controllers/HomeController.php';
 require_once __DIR__ . '/src/controllers/AuthController.php';
+require_once __DIR__ . '/src/controllers/NhanSuController.php';
+require_once __DIR__ . '/src/controllers/LichKhoiHanhController.php';
+require_once __DIR__ . '/src/controllers/BookingController.php';
+require_once __DIR__ . '/src/controllers/TourController.php';
+require_once __DIR__ . '/src/controllers/GhiChuController.php';
+require_once __DIR__ . '/src/controllers/NhatKyController.php';
+require_once __DIR__ . '/src/controllers/QuanLyController.php';
 
 // Khởi tạo các controller
 $homeController = new HomeController();
 $authController = new AuthController();
+$nhansuController = new NhanSuController();
+$lichKhoiHanhController = new LichKhoiHanhController();
+$bookingController = new BookingController();
+$tourController = new TourController();
+$ghiChuController = new GhiChuController();
+$nhatKyController = new NhatKyController();
+$quanLyController = new QuanLyController();
 
 // Xác định route dựa trên tham số act (mặc định là trang chủ '/')
 $act = $_GET['act'] ?? '/';
+
+// Handle dynamic routes
+if (preg_match('/^nhansu\/view\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'nhansu/view';
+} elseif (preg_match('/^nhansu\/edit\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'nhansu/edit';
+} elseif (preg_match('/^lichkhoihanh\/phanbo\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'lichkhoihanh/phanbo';
+} elseif (preg_match('/^lichkhoihanh\/dichvu\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'lichkhoihanh/dichvu';
+} elseif (preg_match('/^lichkhoihanh\/edit\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'lichkhoihanh/edit';
+} elseif (preg_match('/^booking\/danhsach\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'booking/danhsach';
+} elseif (preg_match('/^booking\/print\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'booking/print';
+} elseif (preg_match('/^booking\/phanphong\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'booking/phanphong';
+} elseif (preg_match('/^ghichu\/view\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'ghichu/view';
+} elseif (preg_match('/^ghichu\/khachhang\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'ghichu/khachhang';
+} elseif (preg_match('/^nhatky\/view\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'nhatky/view';
+} elseif (preg_match('/^nhatky\/them-dien-bien\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'nhatky/them-dien-bien';
+} elseif (preg_match('/^nhatky\/danh-gia-hdv\/(\d+)$/', $act, $matches)) {
+    $_GET['id'] = $matches[1];
+    $act = 'nhatky/danh-gia-hdv';
+}
 
 // Match đảm bảo chỉ một action tương ứng được gọi
 match ($act) {
@@ -32,7 +90,66 @@ match ($act) {
     // Đường dẫn đăng nhập, đăng xuất
     'login' => $authController->login(),
     'check-login' => $authController->checkLogin(),
+    'admin/login' => $authController->adminLogin(),
+    'admin/check-login' => $authController->checkAdminLogin(),
+    'profile' => $authController->profile(),
+    'upload-avatar' => $authController->uploadAvatar(),
     'logout' => $authController->logout(),
+
+    // HDV Management routes
+    'nhansu' => $nhansuController->index(),
+    'nhansu/create' => $nhansuController->create(),
+    'nhansu/store' => $nhansuController->store(),
+    'nhansu/view' => $nhansuController->view(),
+    'nhansu/edit' => $nhansuController->edit(),
+    'nhansu/update' => $nhansuController->update(),
+    'nhansu/history' => $nhansuController->history(),
+
+    // Lịch khởi hành Management routes
+    'lich', 'lichkhoihanh' => $lichKhoiHanhController->index(),
+    'lichkhoihanh/create' => $lichKhoiHanhController->create(),
+    'lichkhoihanh/phanbo' => $lichKhoiHanhController->phanBo($_GET['id']),
+    'lichkhoihanh/dichvu' => $lichKhoiHanhController->dichVu($_GET['id']),
+
+    // Tour Management routes
+    'tours' => $tourController->index(),
+    'tours/detail' => $tourController->detail(),
+    'tours/form' => $tourController->form(),
+    'tours/save' => $tourController->save(),
+    'tours/delete' => $tourController->delete(),
+
+    // Booking Management routes
+    'booking' => $bookingController->index(),
+    'booking/store' => $bookingController->store(),
+    'booking/update-status' => $bookingController->updateStatus(),
+    'booking/delete' => $bookingController->delete(),
+    'booking/danhsach' => $bookingController->danhSach($_GET['id']),
+    'booking/print' => $bookingController->inDanhSach($_GET['id']),
+    'booking/phanphong' => $bookingController->phanPhong($_GET['id']),
+    
+    // Admin booking routes
+    'admin/bookings' => $bookingController->index(),
+
+    // Ghi chú đặc biệt routes
+    'ghichu' => $ghiChuController->index(),
+    'ghichu/create' => $ghiChuController->create(),
+    'ghichu/view' => $ghiChuController->view($_GET['id']),
+    'ghichu/khachhang' => $ghiChuController->khachHang($_GET['id']),
+
+    // Nhật ký tour routes
+    'nhatky' => $nhatKyController->index(),
+    'nhatky/create' => $nhatKyController->create(),
+    'nhatky/view' => $nhatKyController->view($_GET['id']),
+    'nhatky/them-dien-bien' => $nhatKyController->themDienBien($_GET['id']),
+    'nhatky/danh-gia-hdv' => $nhatKyController->danhGiaHdv($_GET['id']),
+
+    // Quản lý tổng hợp routes
+    'quanly' => $quanLyController->index(),
+    'quanly/nhansu' => $quanLyController->nhanSu(),
+    'quanly/lich' => $quanLyController->lichKhoiHanh(),
+    'quanly/booking' => $quanLyController->booking(),
+    'quanly/ghichu' => $quanLyController->ghiChu(),
+    'quanly/nhatky' => $quanLyController->nhatKy(),
 
     // Đường dẫn không tồn tại
     default => $homeController->notFound(),
