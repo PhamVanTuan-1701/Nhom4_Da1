@@ -101,10 +101,10 @@ class AuthController
                 'status' => 1,
             ]);
         } else {
-            // Đăng nhập với quyền user thông thường (không kiểm tra mật khẩu)
+            // Cho phép mọi người đăng nhập với bất kỳ tài khoản nào
             $user = new User([
                 'id' => 1,
-                'name' => 'Hướng dẫn viên',
+                'name' => !empty($email) ? $email : 'Người dùng',
                 'email' => $email,
                 'role' => 'huong_dan_vien',
                 'status' => 1,
