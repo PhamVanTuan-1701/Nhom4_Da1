@@ -22,8 +22,31 @@ function view(string $view, array $data = []): void
         throw new RuntimeException("View '{$view}' not found at {$file}");
     }
 
-    extract($data, EXTR_OVERWRITE); // biến hóa mảng $data thành biến riêng lẻ
+    extract($data, EXTR_OVERWRITE);
+    
+    // Bắt đầu output buffering để lấy nội dung view
+    ob_start();
     include $file;
+    $content = ob_get_clean();
+    
+    // Nếu có layout thì sử dụng layout, không thì hiển thị trực tiếp
+    if ($GLOBALS['current_layout']) {
+        $layoutFile = BASE_PATH . DIRECTORY_SEPARATOR . 'views' . DIRECTORY_SEPARATOR . 'layouts' . DIRECTORY_SEPARATOR . $GLOBALS['current_layout'] . '.php';
+        
+        if (file_exists($layoutFile)) {
+            $layoutData = array_merge($GLOBALS['layout_data'], ['content' => $content]);
+            extract($layoutData, EXTR_OVERWRITE);
+            include $layoutFile;
+        } else {
+            echo $content;
+        }
+        
+        // Reset layout
+        $GLOBALS['current_layout'] = null;
+        $GLOBALS['layout_data'] = [];
+    } else {
+        echo $content;
+    }
 }
 
 // Hàm include block: nạp một block từ thư mục blocks(thành phần layouts)
@@ -44,20 +67,6 @@ function asset(string $path): string
 {
     $trimmed = ltrim($path, '/');
     return rtrim(BASE_URL, '/') . '/public/' . $trimmed;
-}
-
-// Tạo avatar chữ cái cho user
-function getUserAvatarHtml($user, $size = 40, $classes = '')
-{
-    if ($user->role === 'admin') {
-        // Admin dùng ảnh upload hoặc mặc định
-        $avatarSrc = isset($_SESSION['user_avatar_' . $user->id]) ? $_SESSION['user_avatar_' . $user->id] : asset('dist/assets/img/user2-160x160.jpg');
-        return '<img src="' . $avatarSrc . '" class="' . $classes . '" alt="Avatar" style="width: ' . $size . 'px; height: ' . $size . 'px; object-fit: cover;">';
-    } else {
-        // User dùng avatar chữ cái
-        $initial = getLastNameInitial($user->name);
-        return '<div class="' . $classes . '" style="width: ' . $size . 'px; height: ' . $size . 'px; background: linear-gradient(135deg, #007bff, #0056b3); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: ' . ($size * 0.4) . 'px;">' . $initial . '</div>';
-    }
 }
 
 // Khởi động session nếu chưa khởi động(session là một cơ chế để lưu trữ dữ liệu trên server)
@@ -164,74 +173,13 @@ function requireGuideOrAdmin()
     }
 }
 
-// Kiểm tra xem user hiện tại có phải là user thông thường không
-function isUser()
-{
-    $user = getCurrentUser();
-    return $user && $user->role === 'huong_dan_vien';
-}
+// Biến toàn cục lưu layout hiện tại
+$GLOBALS['current_layout'] = null;
+$GLOBALS['layout_data'] = [];
 
-// Lấy loại tài khoản hiện tại
-function getUserType()
+// Hàm thiết lập layout cho view
+function layout(string $layout, array $data = []): void
 {
-    if (isAdmin()) {
-        return 'admin';
-    } elseif (isUser()) {
-        return 'user';
-    }
-    return 'guest';
-}
-
-// Lấy tên hiển thị của loại tài khoản
-function getUserTypeLabel()
-{
-    switch (getUserType()) {
-        case 'admin':
-            return 'Quản trị viên';
-        case 'user':
-            return 'Hướng dẫn viên';
-        default:
-            return 'Khách';
-    }
-}
-
-// Lấy chữ cái cuối của tên để làm avatar
-function getLastNameInitial($fullName)
-{
-    $words = explode(' ', trim($fullName));
-    $lastName = end($words);
-    return strtoupper(substr($lastName, 0, 1));
-}
-
-// Đếm số lượng tour
-function getTourCount()
-{
-    try {
-        $db = getDB();
-        $stmt = $db->prepare("SELECT COUNT(*) FROM tours WHERE status = 1");
-        $stmt->execute();
-        return $stmt->fetchColumn();
-    } catch (Exception $e) {
-        return 0;
-    }
-}
-
-// Đếm số lượng booking
-function getBookingCount()
-{
-    try {
-        $db = getDB();
-        $stmt = $db->prepare("SELECT COUNT(*) FROM bookings");
-        $stmt->execute();
-        return $stmt->fetchColumn();
-    } catch (Exception $e) {
-        return 0;
-    }
-}
-
-// Đếm số lượng nhân sự
-function getNhanSuCount()
-{
-    // Giả lập có 4 nhân sự (4 admin đã đăng ký)
-    return 4;
+    $GLOBALS['current_layout'] = $layout;
+    $GLOBALS['layout_data'] = $data;
 }

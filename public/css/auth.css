@@ -143,33 +143,6 @@ a.text-fpt-orange:hover {
     color: var(--fpt-orange);
 }
 
-/* ===== Admin Login Styles ===== */
-.admin-login-header {
-    background: linear-gradient(135deg, #dc3545, #c82333) !important;
-}
-
-.admin-login-title {
-    color: #dc3545 !important;
-}
-
-.btn-admin-login {
-    font-weight: 600;
-    padding: 0.75rem 0;
-    border-radius: 8px;
-    background: #dc3545;
-    color: #fff;
-    border: none;
-    box-shadow: 0 4px 16px rgba(220, 53, 69, 0.13);
-    transition: background 0.2s, box-shadow 0.2s;
-}
-
-.btn-admin-login:hover,
-.btn-admin-login:active {
-    background: #c82333;
-    color: #fff;
-    box-shadow: 0 7px 32px rgba(220, 53, 69, 0.21);
-}
-
 /* ===== Welcome Page Styles ===== */
 .welcome-wrapper {
     min-height: 100vh;

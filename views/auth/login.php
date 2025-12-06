@@ -3,16 +3,16 @@
 ob_start();
 ?>
 <!--begin::Login Content-->
-<div class="login-wrapper" style="background-image: url('<?= asset('dist/assets/img/background.png') ?>'); background-size: cover; background-position: center;">
+<div class="login-wrapper">
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
-        <div class="card login-card shadow-lg border-0" style="backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.3);">
-            <div class="login-header text-center text-white" style="background: linear-gradient(135deg, rgba(255, 115, 0, 0.3), rgba(250, 156, 5, 0.3));">
+        <div class="card login-card shadow-lg border-0">
+            <div class="login-header text-center text-white">
                 <a href="<?= BASE_URL ?>" class="text-white text-decoration-none">
                     <div class="brand-icon mb-2">
-                        <img src="<?= asset('dist/assets/img/LOGO.PNG') ?>" alt="Logo" style="height: 300px; width: auto;">
+                        <i class="bi bi-airplane-fill"></i>
                     </div>
-                    <h2 style="font-weight: 900; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-                        Hệ thống LUXURY4TRIP
+                    <h2>
+                        <strong>Quản Lý Tour FPOLY</strong>
                     </h2>
                 </a>
                 <div class="mt-2 fw-light fst-italic" style="font-size: 1rem;">
@@ -21,7 +21,7 @@ ob_start();
             </div>
             <div class="card-body">
                 <h4 class="card-title text-center mb-4 fw-bold card-title-login">
-                    Đăng nhập hệ thống
+                    Đăng nhập để tiếp tục
                 </h4>
                 <?php if (!empty($errors)): ?>
                 <div class="alert alert-danger fade show" role="alert">
@@ -41,16 +41,16 @@ ob_start();
 
                     <div class="mb-3">
                         <label for="loginEmail" class="form-label fw-semibold">
-                            Tài khoản
+                            Email
                         </label>
                         <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-person"></i></span>
-                            <input type="text"
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email"
                                    class="form-control"
                                    id="loginEmail"
                                    name="email"
                                    value="<?= htmlspecialchars($email ?? '') ?>"
-                                   placeholder="Nhập tài khoản hoặc email"
+                                   placeholder="Nhập email"
                                    required
                                    autofocus />
                         </div>
@@ -84,7 +84,7 @@ ob_start();
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-login btn-lg">
-                            <i class="bi bi-box-arrow-in-right me-2"></i>Đăng nhập hệ thống
+                            <i class="bi bi-box-arrow-in-right me-2"></i>Đăng nhập
                         </button>
                     </div>
                 </form>
@@ -92,7 +92,7 @@ ob_start();
                 <div class="text-center">
                     <a href="<?= BASE_URL ?>" class="text-decoration-none text-fpt-orange fw-semibold">
                         <i class="bi bi-arrow-left me-2"></i>
-                        Trang chủ
+                        Quay về trang chủ
                     </a>
                 </div>
             </div>

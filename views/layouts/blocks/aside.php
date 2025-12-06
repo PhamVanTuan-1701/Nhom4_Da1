@@ -12,13 +12,7 @@
       />
       <!--end::Brand Image-->
       <!--begin::Brand Text-->
-      <span class="brand-text fw-light">
-        <?php if (isAdmin()): ?>
-          Quản Trị Viên
-        <?php else: ?>
-          Quản Lý Tour
-        <?php endif; ?>
-      </span>
+      <span class="brand-text fw-light">Quản Lý Tour</span>
       <!--end::Brand Text-->
     </a>
     <!--end::Brand Link-->
@@ -44,86 +38,21 @@
           <a href="#" class="nav-link">
             <i class="nav-icon bi bi-airplane-engines"></i>
             <p>
-              Bán tour và đặt chỗ
+              Quản lý Tour
               <i class="nav-arrow bi bi-chevron-right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="<?= BASE_URL ?>tours" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p>
-                  Danh sách Tour
-                  <span class="badge badge-info right"><?= getTourCount() ?></span>
-                </p>
+                <p>Danh sách Tour</p>
               </a>
             </li>
-            <?php if (isAdmin()): ?>
             <li class="nav-item">
-              <a href="<?= BASE_URL ?>tours/form" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
                 <p>Thêm Tour mới</p>
-              </a>
-            </li>
-            <?php endif; ?>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon bi bi-gear-wide-connected"></i>
-            <p>
-              <?= isAdmin() ? 'Quản lý & Điều hành Tour' : 'Thông tin Tour' ?>
-              <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <?php if (isAdmin()): ?>
-            <li class="nav-item">
-              <a href="<?= BASE_URL ?>nhansu" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>
-                  Quản lý Nhân sự
-                  <span class="badge badge-success right"><?= getNhanSuCount() ?></span>
-                </p>
-              </a>
-            </li>
-            <?php endif; ?>
-            <li class="nav-item">
-              <a href="<?= BASE_URL ?>lich" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p><?= isAdmin() ? 'Lịch khởi hành & Phân bổ' : 'Xem lịch khởi hành' ?></p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?= BASE_URL ?>booking" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>
-                  <?= isAdmin() ? 'Danh sách Khách đoàn' : 'Xem khách đoàn' ?>
-                  <span class="badge badge-warning right"><?= getBookingCount() ?></span>
-                </p>
-              </a>
-            </li>
-            <?php if (isAdmin()): ?>
-            <li class="nav-item">
-              <a href="<?= BASE_URL ?>admin/bookings" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>
-                  Quản lý Đơn hàng
-                  <span class="badge badge-danger right"><?= getBookingCount() ?></span>
-                </p>
-              </a>
-            </li>
-            <?php endif; ?>
-            <li class="nav-item">
-              <a href="<?= BASE_URL ?>ghichu" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p><?= isAdmin() ? 'Ghi chú đặc biệt' : 'Xem ghi chú' ?></p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?= BASE_URL ?>nhatky" class="nav-link">
-                <i class="nav-icon bi bi-circle"></i>
-                <p><?= isAdmin() ? 'Nhật ký Tour' : 'Xem nhật ký' ?></p>
               </a>
             </li>
           </ul>
@@ -132,7 +61,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon bi bi-people-fill"></i>
             <p>
-              <?= isAdmin() ? 'Quản lý Khách hàng' : 'Xem Khách hàng' ?>
+              Quản lý Khách hàng
               <i class="nav-arrow bi bi-chevron-right"></i>
             </p>
           </a>
@@ -140,7 +69,7 @@
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="nav-icon bi bi-circle"></i>
-                <p><?= isAdmin() ? 'Danh sách Khách hàng' : 'Khách hàng trong tour' ?></p>
+                <p>Danh sách Khách hàng</p>
               </a>
             </li>
           </ul>

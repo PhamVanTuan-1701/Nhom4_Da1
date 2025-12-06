@@ -1,22 +1,35 @@
 <?php ob_start(); ?>
 
+<?php
+// Error handling: Check if required variables exist
+if (!isset($booking) || empty($booking)) {
+    die('Error: Booking information not found.');
+}
+if (!isset($khachHang) || !is_array($khachHang)) {
+    $khachHang = [];
+}
+if (!isset($phongTrong) || !is_array($phongTrong)) {
+    $phongTrong = [];
+}
+?>
+
 <div class="row">
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Phân phòng khách sạn - <?= htmlspecialchars($booking['ma_booking']) ?></h3>
+        <h3 class="card-title">Phân phòng khách sạn - <?= htmlspecialchars($booking['ma_booking'] ?? 'N/A') ?></h3>
       </div>
       <div class="card-body">
         <div class="row mb-3">
           <div class="col-md-6">
             <table class="table table-sm">
-              <tr><td><strong>Tour:</strong></td><td><?= htmlspecialchars($booking['ten_tour']) ?></td></tr>
-              <tr><td><strong>Khách sạn:</strong></td><td><?= htmlspecialchars($booking['khach_san']) ?></td></tr>
+              <tr><td><strong>Tour:</strong></td><td><?= htmlspecialchars($booking['ten_tour'] ?? 'N/A') ?></td></tr>
+              <tr><td><strong>Khách sạn:</strong></td><td><?= htmlspecialchars($booking['khach_san'] ?? 'N/A') ?></td></tr>
             </table>
           </div>
         </div>
 
-        <form method="POST" action="<?= BASE_URL ?>booking/savePhanPhong/<?= $booking['id'] ?>">
+        <form method="POST" action="<?= BASE_URL ?>booking/savePhanPhong/<?= htmlspecialchars($booking['id'] ?? '') ?>">
           <div class="row">
             <div class="col-md-6">
               <div class="card">

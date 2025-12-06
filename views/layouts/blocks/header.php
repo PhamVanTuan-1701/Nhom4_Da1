@@ -54,48 +54,23 @@
         <?php $currentUser = getCurrentUser(); ?>
         <li class="nav-item dropdown user-menu">
           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-            <?php if (isAdmin()): ?>
             <img
-              id="headerAvatar"
-              src="<?= isset($_SESSION['user_avatar_' . getCurrentUser()->id]) ? $_SESSION['user_avatar_' . getCurrentUser()->id] : asset('dist/assets/img/user2-160x160.jpg') ?>"
+              src="<?= asset('dist/assets/img/user2-160x160.jpg') ?>"
               class="user-image rounded-circle shadow"
               alt="User Image"
-              style="object-fit: cover;"
             />
-            <?php else: ?>
-            <img
-              id="headerAvatar"
-              src="<?= asset('dist/assets/img/avatar.png') ?>"
-              class="user-image rounded-circle shadow"
-              alt="User Image"
-              style="object-fit: cover;"
-            />
-            <?php endif; ?>
             <span class="d-none d-md-inline"><?= $currentUser->name ?></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
             <!--begin::User Image-->
             <li class="user-header text-bg-primary">
-              <?php if (isAdmin()): ?>
               <img
-                id="dropdownAvatar"
-                src="<?= isset($_SESSION['user_avatar_' . getCurrentUser()->id]) ? $_SESSION['user_avatar_' . getCurrentUser()->id] : asset('dist/assets/img/user2-160x160.jpg') ?>"
+                src="<?= asset('dist/assets/img/user2-160x160.jpg') ?>"
                 class="rounded-circle shadow"
                 alt="User Image"
-                style="object-fit: cover; width: 90px; height: 90px;"
               />
-              <?php else: ?>
-              <img
-                id="dropdownAvatar"
-                src="<?= asset('dist/assets/img/avatar.png') ?>"
-                class="rounded-circle shadow"
-                alt="User Image"
-                style="object-fit: cover; width: 90px; height: 90px;"
-              />
-              <?php endif; ?>
               <p>
-                <?= $currentUser->name ?>
-                <small class="d-block"><?= getUserTypeLabel() ?></small>
+                <?= $currentUser->name ?> - <?= $currentUser->isAdmin() ? 'Quản trị viên' : 'Hướng dẫn viên' ?>
                 <small><?= date('M. Y') ?></small>
               </p>
             </li>
@@ -103,24 +78,10 @@
             <!--begin::Menu Body-->
             
             <!--end::Menu Body-->
-            <!--begin::Menu Body-->
-            <li class="user-body">
-              <div class="row">
-                <div class="col-12 text-center">
-                  <small class="text-muted">ID: #<?= $currentUser->id ?></small><br>
-                  <small class="text-muted">Email: <?= $currentUser->email ?></small>
-                </div>
-              </div>
-            </li>
-            <!--end::Menu Body-->
             <!--begin::Menu Footer-->
             <li class="user-footer">
-              <a href="<?= BASE_URL ?>profile" class="btn btn-default btn-flat">
-                <i class="bi bi-person-circle me-1"></i>Tài khoản
-              </a>
-              <a href="<?= BASE_URL . 'logout' ?>" class="btn btn-default btn-flat float-end">
-                <i class="bi bi-box-arrow-right me-1"></i>Đăng xuất
-              </a>
+              <a href="#" class="btn btn-default btn-flat">Tài khoản</a>
+              <a href="<?= BASE_URL . 'logout' ?>" class="btn btn-default btn-flat float-end">Đăng xuất</a>
             </li>
             <!--end::Menu Footer-->
           </ul>
