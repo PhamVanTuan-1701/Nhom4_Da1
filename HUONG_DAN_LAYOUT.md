@@ -1,11 +1,10 @@
 # Hướng dẫn sử dụng Layout và Content
+
 ## Cơ chế hoạt động
+
 ### 1. Output Buffering (ob_start/ob_get_clean)
     - Output Buffering: Dùng ob_start() để "bắt" tất cả nội dung HTML/PHP (echo, print...) vào một biến, không xuất ra màn hình ngay.
     - Sau đó dùng ob_get_clean() để lấy toàn bộ nội dung đó ra, gán vào biến $content.
-
-
-
 
 ### 2. Hàm view() xử lý như thế nào?
 
@@ -22,10 +21,6 @@ function view(string $view, array $data = []): void
     include $file;  // Include layout.php (lúc này $content đã là biến)
 }
 ```
-
-
-
-
 
 ### 3. Layout.php nhận và hiển thị
 
