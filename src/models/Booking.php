@@ -54,4 +54,44 @@ class Booking {
         $stmt = $db->prepare("DELETE FROM bookings WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
+        public function count() {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT COUNT(*) as total FROM bookings");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    // 6. Lấy doanh thu theo tháng
+    public function getRevenueByMonth($thang) {
+        $db = getDB();
+        $sql = "SELECT COUNT(*) as total FROM bookings WHERE DATE_FORMAT(created_at, '%Y-%m') = ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$thang]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    // 7. Lấy doanh thu trong khoảng thời gian
+    public function getRevenueReport($tuNgay, $denNgay) {
+        $db = getDB();
+        $sql = "SELECT COUNT(*) as total FROM bookings WHERE created_at BETWEEN ? AND ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$tuNgay, $denNgay]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['total'] ?? 0;
+    }
+
+    // 8. Lấy doanh thu chi tiết theo tour
+    public function getRevenueByTour($tuNgay, $denNgay) {
+        $db = getDB();
+        $sql = "SELECT t.*, COUNT(b.id) as total_bookings
+                FROM tours t
+                LEFT JOIN bookings b ON t.id = b.tour_id AND b.created_at BETWEEN ? AND ?
+                GROUP BY t.id
+                ORDER BY total_bookings DESC";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$tuNgay, $denNgay]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

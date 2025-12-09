@@ -50,7 +50,7 @@ class TourController {
         }
     }
 
-    // 5. Xóa Tour
+    // 5. Xóa Tour (Hàm bạn đang thiếu/lỗi)
     public function delete() {
         $id = $_GET['id'] ?? null;
         if ($id) {

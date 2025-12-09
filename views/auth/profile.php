@@ -166,7 +166,7 @@
               <i class="bi bi-lock me-2"></i>Không thể đổi mật khẩu
             </button>
           <?php endif; ?>
-          <a href="<?= BASE_URL ?>home" class="btn btn-secondary">
+          <a href="<?= BASE_URL ?>?act=home" class="btn btn-secondary">
             <i class="bi bi-arrow-left me-2"></i>Quay lại Dashboard
           </a>
         </div>

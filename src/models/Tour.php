@@ -49,4 +49,40 @@ class Tour {
         $stmt = $db->prepare("DELETE FROM tours WHERE id = :id");
         return $stmt->execute(['id' => $id]);
     }
-}
+     public function count()
+    {
+        $db = getDB();
+        $stmt = $db->prepare("SELECT COUNT(*) as total FROM tours");
+        $stmt->execute();
+        $result = $stmt->fetch();
+        return $result['total'] ?? 0;
+    }
+
+public function getPopularTours($limit = 5)
+    {
+        $db = getDB();
+        $sql = "SELECT t.*, COUNT(b.id) as booking_count 
+                FROM tours t
+                LEFT JOIN bookings b ON t.id = b.tour_id
+                GROUP BY t.id 
+                ORDER BY booking_count DESC 
+                LIMIT ?";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$limit]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function getTourPerformance($thang)
+    {
+        $db = getDB();
+        $sql = "SELECT t.*, COUNT(b.id) as total_bookings
+                FROM tours t
+                LEFT JOIN bookings b ON t.id = b.tour_id AND DATE_FORMAT(b.created_at, '%Y-%m') = ?
+                GROUP BY t.id
+                ORDER BY total_bookings DESC";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([$thang]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+  
+    }
